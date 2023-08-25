@@ -1,0 +1,32 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Merchant {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+}
+
+type Query {
+  getAllMerchants: [Merchant!]!
+}
+
+type Mutation {
+  createMerchant(input: createMerchantDto!): Merchant!
+  updateMerchant(id: Float!, input: updateMerchantDto!): Merchant!
+  deleteMerchant(id: Float!): Boolean!
+}
+
+input createMerchantDto {
+  name: String!
+  email: String!
+  password: String!
+}
+
+input updateMerchantDto {
+  name: String
+  email: String
+  password: String
+}
