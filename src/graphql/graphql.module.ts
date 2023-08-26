@@ -13,6 +13,7 @@ import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
       driver: ApolloDriver,
     }),
     MerchantModule,
+    MessageModule,
   ],
 })
 export class GraphqlModule {}

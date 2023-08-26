@@ -2,6 +2,25 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Message {
+  id: ID!
+  text: String!
+  userId: String!
+  merchantId: Int!
+  sender: MessageSender!
+  createdAt: DateTime!
+}
+
+enum MessageSender {
+  User
+  Merchant
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Merchant {
   id: ID!
   name: String!
@@ -11,12 +30,19 @@ type Merchant {
 
 type Query {
   getAllMerchants: [Merchant!]!
+  getAllConversationMessage(input: getAllMessagesDto!): [Message!]!
+}
+
+input getAllMessagesDto {
+  userId: String!
+  merchantId: Float!
 }
 
 type Mutation {
   createMerchant(input: createMerchantDto!): Merchant!
   updateMerchant(id: Float!, input: updateMerchantDto!): Merchant!
   deleteMerchant(id: Float!): Boolean!
+  createMessage(input: createMessageDto!): Message!
 }
 
 input createMerchantDto {
@@ -29,4 +55,11 @@ input updateMerchantDto {
   name: String
   email: String
   password: String
+}
+
+input createMessageDto {
+  text: String!
+  userId: String!
+  merchantId: Float!
+  sender: MessageSender!
 }

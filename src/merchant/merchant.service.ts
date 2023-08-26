@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
-import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Merchant } from 'src/entity/merchant.entity';
 import { createMerchantDto } from './dto/create.merchant';
@@ -27,8 +27,6 @@ export class MerchantService {
       id,
       ...input,
     });
-
-    console.log(merchant);
 
     if (!merchant) {
       throw new NotFoundException({ message: 'Merchant not found' });

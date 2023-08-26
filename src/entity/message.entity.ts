@@ -5,12 +5,16 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
+import { ObjectType, Field, ID, Int, registerEnumType } from '@nestjs/graphql';
 
 export enum MessageSender {
-  User = 'user',
-  Merchant = 'merchant',
+  'User',
+  'Merchant',
 }
+
+registerEnumType(MessageSender, {
+  name: 'MessageSender',
+});
 
 @ObjectType()
 @Entity()
