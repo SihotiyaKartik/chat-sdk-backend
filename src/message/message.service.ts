@@ -40,8 +40,6 @@ export class MessageService {
       where: { id: merchantId },
     });
 
-    console.log(merchantData);
-
     if (!merchantData || merchantData.length == 0) {
       throw new NotFoundException({
         message: 'No such merchant Exist',

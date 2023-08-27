@@ -17,6 +17,10 @@ export class MerchantService {
     return await this.merchantRepository.find();
   }
 
+  async getMerchnatById(id: number): Promise<Merchant> {
+    return await this.merchantRepository.findOne({ where: { id } });
+  }
+
   async createMerchant(input: createMerchantDto): Promise<Merchant> {
     const newMerchant = this.merchantRepository.create(input);
     return await this.merchantRepository.save(newMerchant);
