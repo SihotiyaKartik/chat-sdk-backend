@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Message } from 'src/entity/message.entity';
 import { createMessageDto } from './dto/create.message';
 import { getAllMessagesDto } from './dto/get.all.messages';
-import { Merchant } from 'src/entity/merchant.entity';
+import { MerchantService } from 'src/merchant/merchant.service';
 import { NotFoundException } from '@nestjs/common';
 
 @Injectable()
@@ -12,16 +12,22 @@ export class MessageService {
   constructor(
     @InjectRepository(Message)
     private readonly messageRepository: Repository<Message>,
-    @InjectRepository(Merchant)
-    private readonly merchantRepository: Repository<Merchant>,
+    private readonly merchantService: MerchantService,
   ) {}
 
   async createMessage(input: createMessageDto): Promise<Message> {
-    const merchantData = await this.merchantRepository.find({
-      where: { id: input.merchantId },
-    });
+    const newMessage = this.messageRepository.create(input);
+    return await this.messageRepository.save(newMessage);
+  }
 
-    if (!merchantData || merchantData.length == 0) {
+  async createMessageWithMerchantValidation(
+    input: createMessageDto,
+  ): Promise<Message> {
+    const merchantData = await this.merchantService.getMerchnatById(
+      input.merchantId,
+    );
+
+    if (!merchantData) {
       throw new NotFoundException({
         message: "Error while sending message, given merchant doesn't exist",
       });
@@ -36,11 +42,11 @@ export class MessageService {
   ): Promise<Message[]> {
     const { userId, merchantId } = input;
 
-    const merchantData = await this.merchantRepository.find({
-      where: { id: merchantId },
-    });
+    const merchantData = await this.merchantService.getMerchnatById(
+      input.merchantId,
+    );
 
-    if (!merchantData || merchantData.length == 0) {
+    if (!merchantData) {
       throw new NotFoundException({
         message: 'No such merchant Exist',
       });
