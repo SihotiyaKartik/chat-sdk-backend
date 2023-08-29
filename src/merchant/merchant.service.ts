@@ -22,14 +22,6 @@ export class MerchantService {
   }
 
   async createMerchant(input: createMerchantDto): Promise<Merchant> {
-    const existingMerchant = await this.merchantRepository.findOne({
-      where: { email: input.email },
-    });
-
-    if (existingMerchant) {
-      throw new Error('Email already exist');
-    }
-
     const newMerchant = this.merchantRepository.create(input);
     return await this.merchantRepository.save(newMerchant);
   }
