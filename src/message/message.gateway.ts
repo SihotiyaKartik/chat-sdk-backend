@@ -56,7 +56,7 @@ export class ChatGateway
   async handleMessage(socket: Socket, message: any) {
     this.server.emit('recievedMessage', message);
 
-    const { text, sender } = message[0];
+    const { text, sender } = message;
     const { merchantId, userId } = socket.data.context;
 
     const messageSender =
